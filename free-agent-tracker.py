@@ -9,20 +9,14 @@ discord_secret = os.environ["DISCORD_SECRET"]
 
 league = League(league_id, year, espn_s2, swid)
 
-print('INFO: TEAMS')
-print(league.teams)
-print('INFO: FREE AGENTS')
+top_free_agents = league.free_agents()
+top_free_agents_and_health = []
 
-pro_players_data = league.free_agents()
-all_players = []
-injured_players = []
-free_agency_status = []
-
-for player in pro_players_data:
+for player in top_free_agents:
     x = ('{} - {}'.format(player.name, player.injuryStatus))
-    free_agency_status.append(x)
+    top_free_agents_and_health.append(x)
 
-formatted_fa = "\n".join(free_agency_status)
+formatted_fa = "\n".join(top_free_agents_and_health)
 
 import discord
 
