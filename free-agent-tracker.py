@@ -11,8 +11,9 @@ discord_secret = os.environ["DISCORD_SECRET"]
 league = League(league_id, year, espn_s2, swid)
 
 help_menu = '''
-Options and description:
-$fa-status - Top 50 Free Agents and their current health
+INFO: Options and description:
+$fa-status     - Top 50 Free Agents and their current health
+$injury-report - All players that are currently out 
 '''
 
 # Free Agents - Status
@@ -24,6 +25,22 @@ for player in top_free_agents:
     top_free_agents_and_health.append(x)
 
 formatted_fa = "\n".join(top_free_agents_and_health)
+
+# Injured Players
+injured_players = []
+
+for team in league.teams:
+    for player in team.roster:
+        if player.injuryStatus == 'OUT':
+            x = ('{} - {} - {}'.format(player.name, player.injuryStatus, team))
+            injured_players.append(x)
+
+for player in top_free_agents:
+    if player.injuryStatus == 'OUT':
+        x = ('{} - {} - Free Agent'.format(player.name, player.injuryStatus))
+        injured_players.append(x)
+
+formatted_injured_players = "\n".join(injured_players)
 
 import discord
 
@@ -46,5 +63,8 @@ async def on_message(message):
 
     if message.content.startswith('$fa-status'):
         await message.channel.send('```\n{}\n```'.format(formatted_fa))
+    
+    if message.content.startswith('$injury-report'):
+        await message.channel.send('```\n{}\n```'.format(formatted_injured_players))
 
 client.run(discord_secret)
