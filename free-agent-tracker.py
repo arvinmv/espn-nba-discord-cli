@@ -1,4 +1,5 @@
 import os
+import json
 from espn_api.basketball import League
 
 league_id = 2029761943
@@ -9,6 +10,12 @@ discord_secret = os.environ["DISCORD_SECRET"]
 
 league = League(league_id, year, espn_s2, swid)
 
+help_menu = '''
+Options and description:
+$fa-status - Top 50 Free Agents and their current health
+'''
+
+# Free Agents - Status
 top_free_agents = league.free_agents()
 top_free_agents_and_health = []
 
@@ -33,6 +40,9 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+
+    if message.content.startswith('$help') or message.content.startswith('$h'):
+        await message.channel.send('```\n{}\n```'.format(help_menu))
 
     if message.content.startswith('$fa-status'):
         await message.channel.send('```\n{}\n```'.format(formatted_fa))
