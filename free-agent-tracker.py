@@ -31,16 +31,25 @@ injured_players = []
 
 for team in league.teams:
     for player in team.roster:
-        if player.injuryStatus == 'OUT':
+        if player.injuryStatus == 'OUT' or player.injuryStatus == 'DAY_TO_DAY':
             x = ('{} - {} - {}'.format(player.name, player.injuryStatus, team))
             injured_players.append(x)
 
 for player in top_free_agents:
-    if player.injuryStatus == 'OUT':
+    if player.injuryStatus == 'OUT' or player.injuryStatus == 'DAY_TO_DAY':
         x = ('{} - {} - Free Agent'.format(player.name, player.injuryStatus))
         injured_players.append(x)
 
 formatted_injured_players = "\n".join(injured_players)
+
+# Win Loss
+all_teams_stats = []
+for team in league.teams:
+    current_record = '{} - Win: {} Loss: {}'.format(team.team_name, team.wins, team.losses)
+    all_teams_stats.append(current_record)
+
+formatted_all_team_stats = '\n'.join(all_teams_stats)
+
 
 import discord
 
@@ -66,5 +75,8 @@ async def on_message(message):
     
     if message.content.startswith('$injury-report'):
         await message.channel.send('```\n{}\n```'.format(formatted_injured_players))
+
+    if message.content.startswith('$team-stats'):
+        await message.channel.send('```\n{}\n```'.format(formatted_all_team_stats))
 
 client.run(discord_secret)
