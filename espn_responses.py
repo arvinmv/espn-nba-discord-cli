@@ -1,11 +1,13 @@
 import os
-import json
 from espn_api.basketball import League
+from dotenv import load_dotenv
 
-league_id = 2029761943
+config = load_dotenv()
+
 year = 2023
-espn_s2 = os.environ["ESPN_S2"] 
-swid = os.environ["SWID"]
+league_id = os.getenv('LEAGUE_ID')
+espn_s2 = os.getenv('ESPN_S2')
+swid = os.getenv('SWID')
 
 league = League(league_id, year, espn_s2, swid)
 top_free_agents = league.free_agents()
