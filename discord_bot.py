@@ -2,12 +2,11 @@ import os
 import discord
 import espn_responses
 from dotenv import load_dotenv
-import settings
 
 config = load_dotenv()
 
 def run():
-    discord_secret = settings.get_discord_secret()
+    discord_secret = os.getenv('DISCORD_SECRET')
     intents = discord.Intents.default()
     intents.message_content = True
     client = discord.Client(intents=intents)
