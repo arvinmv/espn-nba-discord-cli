@@ -18,6 +18,7 @@ def get_help_menu():
 INFO: Options and description:
 $fa-status     - Top 50 Free Agents and their current health
 $injury-report - All players that are currently out 
+$team-stats    - Win/Loss for each team
 '''
     return help_menu
 
