@@ -1,4 +1,5 @@
 import os
+from tabulate import tabulate
 from espn_api.basketball import League
 from dotenv import load_dotenv
 
@@ -23,10 +24,12 @@ $injury-report - All players that are currently out
 def get_free_agents():
     top_free_agents_and_health = []
     for player in top_free_agents:
-        x = ('{} - {}'.format(player.name, player.injuryStatus))
-        top_free_agents_and_health.append(x)
+        FA_DICT = {}
+        FA_DICT['player'] = str(player.name)
+        FA_DICT['health'] = str(player.injuryStatus)
+        top_free_agents_and_health.append(FA_DICT)
 
-    formatted_fa = "\n".join(top_free_agents_and_health)
+    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='rst')
     return formatted_fa
 
 def get_injured_players():
@@ -34,22 +37,23 @@ def get_injured_players():
     for team in league.teams:
         for player in team.roster:
             if player.injuryStatus == 'OUT' or player.injuryStatus == 'DAY_TO_DAY':
-                x = ('{} - {} - {}'.format(player.name, player.injuryStatus, team))
-                injured_players.append(x)
+                INJURY_DICT = {}
+                INJURY_DICT['player'] = str(player.name)
+                INJURY_DICT['health'] = str(player.injuryStatus)
+                INJURY_DICT['team'] = str(team.team_name)
+                injured_players.append(INJURY_DICT)
 
-    for player in top_free_agents:
-        if player.injuryStatus == 'OUT' or player.injuryStatus == 'DAY_TO_DAY':
-            x = ('{} - {} - Free Agent'.format(player.name, player.injuryStatus))
-            injured_players.append(x)
-
-    formatted_injured_players = "\n".join(injured_players)
+    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='rst')
     return formatted_injured_players
 
 def get_win_loss():
-    all_teams_stats = []
+    stats = []
     for team in league.teams:
-        current_record = '{} - Win: {} Loss: {}'.format(team.team_name, team.wins, team.losses)
-        all_teams_stats.append(current_record)
+        STATS_DICT = {}
+        STATS_DICT['wins'] = str(team.wins)
+        STATS_DICT['losses'] = str(team.losses)
+        STATS_DICT['team'] = str(team.team_name)
+        stats.append(STATS_DICT)
 
-    formatted_all_team_stats = '\n'.join(all_teams_stats)
-    return formatted_all_team_stats
+    formatted_stats = tabulate(stats, headers='keys', tablefmt='rst')
+    return formatted_stats
