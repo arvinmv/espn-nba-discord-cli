@@ -33,7 +33,7 @@ def run():
             await message.channel.send('```\n{}\n```'.format(espn_responses.get_win_loss()))
         
         if message.content.startswith('$scoreboard'):
-            await message.channel.send('```\n{}\n```'.format(espn_responses.get_scoreboard()))
+            await message.channel.send('```\n{}\n```'.format(espn_responses.get_score_board()))
 
 
 
