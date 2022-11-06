@@ -2,6 +2,7 @@ import os
 from tabulate import tabulate
 from espn_api.basketball import League
 from dotenv import load_dotenv
+from cleantext import clean
 
 config = load_dotenv()
 
@@ -58,3 +59,18 @@ def get_win_loss():
 
     formatted_stats = tabulate(stats, headers='keys', tablefmt='rst')
     return formatted_stats
+
+def get_score_board():
+    scoreboard = []
+    index = 0
+    matchups = league.scoreboard()
+    for matchup in matchups:
+        SB_DICT = {}
+        SB_DICT['home team'] = clean(str(matchup.home_team.team_name), no_emoji=True, lower=False)
+        SB_DICT['home points'] = str(matchup.home_final_score)
+        SB_DICT['away points'] = str(matchup.away_final_score)
+        SB_DICT['away team'] = clean(str(matchup.away_team.team_name), no_emoji=True, lower=False)
+        scoreboard.append(SB_DICT)
+        index += 1
+    formatted_scoreboard = tabulate(scoreboard, headers='keys', tablefmt='fancy_grid', numalign='center', stralign='left')
+    return formatted_scoreboard
