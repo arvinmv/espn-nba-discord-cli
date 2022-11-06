@@ -20,6 +20,7 @@ INFO: Options and description:
 $fa-status     - Top 50 Free Agents and their current health
 $injury-report - All players that are currently out 
 $team-stats    - Win/Loss for each team
+$scoreboard    - Live scoreboard
 '''
     return help_menu
 
