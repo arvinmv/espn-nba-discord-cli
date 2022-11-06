@@ -2,7 +2,6 @@ import os
 from tabulate import tabulate
 from espn_api.basketball import League
 from dotenv import load_dotenv
-from cleantext import clean
 
 config = load_dotenv()
 
@@ -15,14 +14,14 @@ league = League(league_id, year, espn_s2, swid)
 top_free_agents = league.free_agents()
 
 def get_help_menu():
-    help_menu = '''
-INFO: Options and description:
-$fa-status     - Top 50 Free Agents and their current health
-$injury-report - All players that are currently out 
-$team-stats    - Win/Loss for each team
-$scoreboard    - Live scoreboard
-'''
-    return help_menu
+    help_menu = [['Options', 'Description'],
+                 ['$fa-status', 'Top 50 Free Agents and their current health'],
+                 ['$injurt-report', 'Players that are currently out'],
+                 ['$team-stats', 'Win Loss record per team'],
+                 ['$scoreboard', 'Live scoreboard']]
+
+    formatted_help_menu = tabulate(help_menu, headers='firstrow', tablefmt='fancy_grid')
+    return formatted_help_menu
 
 def get_free_agents():
     top_free_agents_and_health = []
@@ -32,7 +31,7 @@ def get_free_agents():
         FA_DICT['health'] = str(player.injuryStatus)
         top_free_agents_and_health.append(FA_DICT)
 
-    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='rst')
+    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='fancy_grid')
     return formatted_fa
 
 def get_injured_players():
@@ -46,7 +45,7 @@ def get_injured_players():
                 INJURY_DICT['team'] = str(team.team_name)
                 injured_players.append(INJURY_DICT)
 
-    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='rst')
+    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='fancy_grid')
     return formatted_injured_players
 
 def get_win_loss():
@@ -58,7 +57,7 @@ def get_win_loss():
         STATS_DICT['team'] = str(team.team_name)
         stats.append(STATS_DICT)
 
-    formatted_stats = tabulate(stats, headers='keys', tablefmt='rst')
+    formatted_stats = tabulate(stats, headers='keys', tablefmt='fancy_grid')
     return formatted_stats
 
 def get_score_board():
@@ -67,10 +66,10 @@ def get_score_board():
     matchups = league.scoreboard()
     for matchup in matchups:
         SB_DICT = {}
-        SB_DICT['home team'] = clean(str(matchup.home_team.team_name), no_emoji=True, lower=False)
+        SB_DICT['home team'] = str(matchup.home_team.team_name)
         SB_DICT['home points'] = str(matchup.home_final_score)
         SB_DICT['away points'] = str(matchup.away_final_score)
-        SB_DICT['away team'] = clean(str(matchup.away_team.team_name), no_emoji=True, lower=False)
+        SB_DICT['away team'] = str(matchup.away_team.team_name)
         scoreboard.append(SB_DICT)
         index += 1
     formatted_scoreboard = tabulate(scoreboard, headers='keys', tablefmt='fancy_grid', numalign='center', stralign='left')
