@@ -31,7 +31,7 @@ def get_free_agents():
         FA_DICT['health'] = str(player.injuryStatus)
         top_free_agents_and_health.append(FA_DICT)
 
-    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='fancy_grid')
+    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='rst')
     return formatted_fa
 
 def get_injured_players():
@@ -45,7 +45,7 @@ def get_injured_players():
                 INJURY_DICT['team'] = str(team.team_name)
                 injured_players.append(INJURY_DICT)
 
-    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='fancy_grid')
+    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='rst')
     return formatted_injured_players
 
 def get_win_loss():
@@ -74,3 +74,7 @@ def get_score_board():
         index += 1
     formatted_scoreboard = tabulate(scoreboard, headers='keys', tablefmt='fancy_grid', numalign='center', stralign='left')
     return formatted_scoreboard
+
+if __name__ == '__main__':
+    print(get_free_agents())
+    print(get_injured_players())
