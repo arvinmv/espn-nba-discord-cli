@@ -1,7 +1,7 @@
 import os
 from tabulate import tabulate
-from espn_api.basketball import League
 from dotenv import load_dotenv
+from espn_api.basketball import League
 
 config = load_dotenv()
 
@@ -16,7 +16,7 @@ top_free_agents = league.free_agents()
 def get_help_menu():
     help_menu = [['Options', 'Description'],
                  ['$fa-status', 'Top 50 Free Agents and their current health'],
-                 ['$injurt-report', 'Players that are currently out'],
+                 ['$injury-report', 'Players that are currently out'],
                  ['$team-stats', 'Win Loss record per team'],
                  ['$scoreboard', 'Live scoreboard']]
 
@@ -31,7 +31,7 @@ def get_free_agents():
         FA_DICT['health'] = str(player.injuryStatus)
         top_free_agents_and_health.append(FA_DICT)
 
-    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='rst')
+    formatted_fa = tabulate(top_free_agents_and_health, headers='keys', tablefmt='simple')
     return formatted_fa
 
 def get_injured_players():
@@ -45,7 +45,7 @@ def get_injured_players():
                 INJURY_DICT['team'] = str(team.team_name)
                 injured_players.append(INJURY_DICT)
 
-    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='rst')
+    formatted_injured_players = tabulate(injured_players, headers='keys', tablefmt='simple')
     return formatted_injured_players
 
 def get_win_loss():
@@ -57,7 +57,7 @@ def get_win_loss():
         STATS_DICT['team'] = str(team.team_name)
         stats.append(STATS_DICT)
 
-    formatted_stats = tabulate(stats, headers='keys', tablefmt='fancy_grid')
+    formatted_stats = tabulate(stats, headers='keys', tablefmt='simple')
     return formatted_stats
 
 def get_score_board():
@@ -72,7 +72,7 @@ def get_score_board():
         SB_DICT['away team'] = str(matchup.away_team.team_name)
         scoreboard.append(SB_DICT)
         index += 1
-    formatted_scoreboard = tabulate(scoreboard, headers='keys', tablefmt='fancy_grid', numalign='center', stralign='left')
+    formatted_scoreboard = tabulate(scoreboard, headers='keys', tablefmt='simple', numalign='center')
     return formatted_scoreboard
 
 if __name__ == '__main__':

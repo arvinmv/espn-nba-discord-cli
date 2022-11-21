@@ -1,7 +1,7 @@
 import os
 import discord
-import espn_responses
 from dotenv import load_dotenv
+import espn_responses
 
 config = load_dotenv()
 
