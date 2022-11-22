@@ -52,8 +52,8 @@ def get_win_loss():
     stats = []
     for team in league.teams:
         STATS_DICT = {}
-        STATS_DICT['wins'] = str(team.wins)
-        STATS_DICT['losses'] = str(team.losses)
+        STATS_DICT['W'] = str(team.wins)
+        STATS_DICT['L'] = str(team.losses)
         STATS_DICT['team'] = str(team.team_name)
         stats.append(STATS_DICT)
 
