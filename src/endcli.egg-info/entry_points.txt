@@ -1,0 +1,2 @@
+[console_scripts]
+endcli = main:main
