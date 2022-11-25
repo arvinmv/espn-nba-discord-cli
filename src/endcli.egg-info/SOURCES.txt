@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/cli.py
+src/discord_bot.py
+src/espn_responses.py
+src/main.py
+src/endcli.egg-info/PKG-INFO
+src/endcli.egg-info/SOURCES.txt
+src/endcli.egg-info/dependency_links.txt
+src/endcli.egg-info/entry_points.txt
+src/endcli.egg-info/requires.txt
+src/endcli.egg-info/top_level.txt
